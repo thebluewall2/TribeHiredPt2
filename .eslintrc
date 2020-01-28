@@ -1,0 +1,10 @@
+{
+    "extends": "rallycoding",
+    "rules": {
+        "react/require-extension": "off",
+        "no-undef": "off",
+        "no-underscore-dangle": "off",
+        "arrow-body-style": "off",
+        "import/no-extraneous-dependencies": "off"
+    }
+}
