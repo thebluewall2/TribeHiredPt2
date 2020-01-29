@@ -5,6 +5,7 @@ const navBack = () => goBack();
 const navReset = (stackName) => reset(stackName);
 
 const navResetToHomeScreen = () => navReset('homeStack');
+const navToSignUp = () => navPush('signUp');
 
 export default {
     navPush,
@@ -12,4 +13,5 @@ export default {
     navReset,
 
     navResetToHomeScreen,
+    navToSignUp,
 };

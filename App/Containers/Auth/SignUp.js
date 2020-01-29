@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 import TextField from '../../Components/TextField';
 import Button from '../../Components/Button';
 
-import NavActions from '../../Navigation/NavigationActions';
-
-import Actions from '../../Redux/Actions';
-import Selectors from '../../Redux/Selectors';
-
 import styles from './styles';
 
-class SignIn extends PureComponent {
+class SignUp extends PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
+            name: '',
             email: '',
             password: '',
         };
+    }
+
+    _onNameChanged = (name) => {
+        this.setState({ name });
     }
 
     _onEmailChanged = (email) => {
@@ -31,55 +31,50 @@ class SignIn extends PureComponent {
     }
 
     _onSubmit = () => {
-        const { login } = this.props;
-        const { email, password } = this.state;
-
-        login(email, password);
-    }
-
-    _signUp = () => {
-        NavActions.navToSignUp();
+        console.log(this.state);
     }
 
     render() {
-        const { email, password } = this.state;
-        const { loading, error } = this.props;
+        const { name, email, password } = this.state;
+        const { loading } = this.props;
 
         return (
             <View style={styles.mainContainer}>
-                <Text style={styles.titleText}>Login screen</Text>
+                <Text style={styles.titleText}>
+                    Sign Up
+                </Text>
 
                 <View style={styles.textInputContainer}>
                     <TextField
-                        placeholder='example@example.com'
+                        placeholder='name'
+                        autoCapitalize='words'
+                        autoCorrect={false}
+                        onChangeText={this._onNameChanged}
+                        value={name}
+                    />
+
+                    <TextField
+                        placeholder='email address'
                         autoCapitalize='none'
                         autoCorrect={false}
                         onChangeText={this._onEmailChanged}
                         value={email}
+                        keyboardType='email-address'
                     />
 
                     <TextField
                         placeholder='password'
-                        secureTextEntry
                         onChangeText={this._onPasswordChanged}
                         value={password}
+                        secureTextEntry
                     />
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
-                    <Text style={styles.errorText}>
-                        {error}
-                    </Text>
-
-                    <Button
-                        title='Login'
-                        onPress={this._onSubmit}
-                        loading={loading}
-                    />
-
                     <Button
                         title='Sign Up'
-                        onPress={this._signUp}
+                        onPress={this._onSubmit}
+                        loading={loading}
                     />
                 </View>
             </View>
@@ -89,16 +84,14 @@ class SignIn extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-        loading: Selectors.getAuthLoginAttempting(state),
-        error: Selectors.getAuthLoginError(state),
+
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login: (email, password) =>
-            dispatch(Actions.authLoginAttempt(email, password)),
+
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

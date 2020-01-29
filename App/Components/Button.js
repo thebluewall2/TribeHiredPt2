@@ -34,7 +34,7 @@ const renderTitle = (loading, title) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FFD200',
-        width: 80,
+        width: 120,
         height: 47,
         borderRadius: 47 / 2,
         alignItems: 'center',

@@ -5,7 +5,7 @@ export default StyleSheet.create({
         flex: 1,
         marginHorizontal: 5
     },
-    loginTitleStyle: {
+    titleText: {
         textAlign: 'center',
         marginVertical: 20,
         fontSize: 18
