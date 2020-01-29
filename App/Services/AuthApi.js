@@ -19,9 +19,18 @@ const create = (baseURL = 'http://52.221.195.23:8000') => {
             password
         });
 
+    const getAllUsers = (authToken) =>
+        api.get('/api/users', {}, {
+            headers: {
+                Authorization: authToken
+            }
+        });
+
     return {
         login,
         signUp,
+
+        getAllUsers,
     };
 };
 

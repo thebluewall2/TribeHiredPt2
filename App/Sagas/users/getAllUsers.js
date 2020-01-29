@@ -12,8 +12,19 @@ export function* watchGetAllUsers(api) {
 }
 
 export function* handleGetAllUsers(api) {
-    console.log('hello');
-    const authToken = yield take(Selectors.getAuthToken);
+    const authToken = yield select(Selectors.getAuthToken);
 
-    console.log(authToken);
+    try {
+        const response = yield call(api.getAllUsers, authToken);
+
+        if (response.ok) {
+            yield put(Actions.usersGetAllSuccess(response.data));
+        } else {
+            yield put(Actions.usersGetAllFailure(response.data || response.problem));
+        }
+    } catch (error) {
+        console.log(error);
+
+        yield put(Actions.usersGetAllFailure('Something went wrong. Please try again.'));
+    }
 }
