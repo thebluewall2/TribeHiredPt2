@@ -2,16 +2,51 @@ import React, { PureComponent } from 'react';
 import { View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 
+import SearchBar from '../../Components/SearchBar';
+
 import Actions from '../../Redux/Actions';
 import Selectors from '../../Redux/Selectors';
 
 import styles from './styles';
 
 class Home extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            search: '',
+        };
+    }
+
     componentDidMount() {
         const { getAllUsers } = this.props;
 
         getAllUsers();
+    }
+
+    _setSearchQuery = (search) => {
+        this.setState({ search });
+    }
+
+    _getUsers = () => {
+        const { search } = this.state;
+
+        let results = this.props.users;
+
+        if (search.length) {
+            //if user has typed in a search query
+            const searchQuery = search.toUpperCase();
+
+            results = results.filter(user => {
+                const { name, email } = user;
+
+                const userData = `${name.toUpperCase()} ${email.toUpperCase()}`;
+
+                return userData.indexOf(searchQuery) > -1;
+            });
+        }
+
+        return results;
     }
 
     _renderSeparator = () => {
@@ -27,6 +62,18 @@ class Home extends PureComponent {
                     {error}
                 </Text>
             </View>
+        );
+    }
+
+    _renderSearchBar = () => {
+        const { search } = this.state;
+
+        return (
+            <SearchBar
+                placeholder='search'
+                onChangeText={this._setSearchQuery}
+                value={search}
+            />
         );
     }
 
@@ -47,9 +94,11 @@ class Home extends PureComponent {
     }
 
     render() {
-        const { loading, error, users, getAllUsers } = this.props;
+        const { loading, error, getAllUsers } = this.props;
 
         if (error) return this._renderError();
+
+        const users = this._getUsers();
 
         return (
             <FlatList
@@ -60,6 +109,7 @@ class Home extends PureComponent {
                 keyExtractor={item => item.id.toString()}
                 ItemSeparatorComponent={this._renderSeparator}
                 contentContainerStyle={styles.listContainer}
+                ListHeaderComponent={this._renderSearchBar}
             />
         );
     }

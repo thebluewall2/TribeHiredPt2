@@ -11,7 +11,7 @@ export default StyleSheet.create({
     },
     listContainer: {
         marginHorizontal: 10,
-        marginTop: 20,
+        paddingTop: 20,
     },
     userCard: {
         paddingVertical: 12,
