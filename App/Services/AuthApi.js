@@ -12,8 +12,16 @@ const create = (baseURL = 'http://52.221.195.23:8000') => {
             password
         });
 
+    const signUp = (name, email, password) =>
+        api.post('/api/users/', {
+            name,
+            email,
+            password
+        });
+
     return {
         login,
+        signUp,
     };
 };
 

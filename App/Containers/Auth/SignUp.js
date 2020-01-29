@@ -46,7 +46,7 @@ class SignUp extends PureComponent {
 
     render() {
         const { name, email, password } = this.state;
-        const { loading } = this.props;
+        const { loading, error } = this.props;
 
         return (
             <View style={styles.mainContainer}>

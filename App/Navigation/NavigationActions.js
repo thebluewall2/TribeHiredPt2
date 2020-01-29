@@ -8,9 +8,7 @@ const navResetToHomeScreen = () => navReset('homeStack');
 const navToSignUp = () => navPush('signUp');
 
 export default {
-    navPush,
     navBack,
-    navReset,
 
     navResetToHomeScreen,
     navToSignUp,
