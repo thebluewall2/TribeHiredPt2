@@ -25,7 +25,7 @@ export function* handleSignUp(api, user) {
         if (response.ok) {
             yield put(Actions.authSignUpSuccess());
 
-            NavActions.navResetToHomeScreen();
+            NavActions.navBack();
         } else {
             yield put(Actions.authSignUpFailure(response.data || response.problem));
         }
