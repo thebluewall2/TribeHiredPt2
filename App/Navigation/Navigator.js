@@ -1,11 +1,28 @@
 import { createStackNavigator } from 'react-navigation-stack';
 
-import SignInScreen from '../Containers/Home/SignIn';
+import SignInScreen from '../Containers/Auth/SignIn';
+import HomeScreen from '../Containers/Home/';
+
+const AuthStack = createStackNavigator({
+    signIn: {
+        screen: SignInScreen,
+    },
+}, {
+    initialRouteName: 'signIn'
+});
+
+const HomeStack = createStackNavigator({
+    home: HomeScreen,
+}, {
+    initialRouteName: 'home'
+});
 
 const Navigator = createStackNavigator({
-    SignIn: SignInScreen,
+    authStack: AuthStack,
+    homeStack: HomeStack,
 }, {
-    initialRouteName: 'SignIn',
+    initialRouteName: 'authStack',
+    headerMode: 'none',
 });
 
 export default Navigator;

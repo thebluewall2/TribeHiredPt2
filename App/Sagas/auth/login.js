@@ -1,5 +1,7 @@
 import { take, put, call } from 'redux-saga/effects';
 
+import NavActions from '../../Navigation/NavigationActions';
+
 import Actions from '../../Redux/Actions';
 import Types from '../../Redux/Types';
 
@@ -20,6 +22,8 @@ export function* handleLogin(api, email, password) {
 
         if (response.ok && response.data) {
             yield put(Actions.authLoginSuccess(response.data));
+
+            NavActions.navResetToHomeScreen();
         } else {
             const problem = response.data || response.problem;
 
