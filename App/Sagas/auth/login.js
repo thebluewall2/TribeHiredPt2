@@ -11,5 +11,32 @@ export function* watchLogin(api) {
 }
 
 export function* handleLogin(api, email, password) {
-    console.log(email);
+    const valid = yield call(verify, email, password);
+
+    if (!valid) return;
+
+    try {
+        const response = yield call(api.login, email, password);
+
+        if (response.ok && response.data) {
+            yield put(Actions.authLoginSuccess(response.data));
+        } else {
+            const problem = response.data || response.problem;
+
+            yield put(Actions.authLoginFailure(problem));
+        }
+    } catch (error) {
+        console.log(error);
+
+        yield put(Actions.authLoginFailure(error));
+    }
+}
+
+export function* verify(email, password) {
+    if (!email || !password) {
+        yield put(Actions.authLoginFailure('Please enter both your email and password.'));
+        return false;
+    }
+
+    return true;
 }

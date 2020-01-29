@@ -13,5 +13,9 @@ export default StyleSheet.create({
     textInputContainer: {
         marginHorizontal: 20,
         justifyContent: 'space-between',
+    },
+    errorText: {
+        color: 'red',
+        marginTop: 10
     }
 });

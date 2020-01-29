@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import TextField from '../../Components/TextField';
 import Button from '../../Components/Button';
 
+import Actions from '../../Redux/Actions';
+import Selectors from '../../Redux/Selectors';
+
 import styles from './styles';
 
 class SignIn extends PureComponent {
@@ -26,11 +29,15 @@ class SignIn extends PureComponent {
     }
 
     _onSubmit = () => {
-        console.log(this.state);
+        const { login } = this.props;
+        const { email, password } = this.state;
+
+        login(email, password);
     }
 
     render() {
         const { email, password } = this.state;
+        const { loading, error } = this.props;
 
         return (
             <View style={styles.mainContainer}>
@@ -55,9 +62,14 @@ class SignIn extends PureComponent {
                 </View>
 
                 <View style={{ alignItems: 'center' }}>
+                    <Text style={styles.errorText}>
+                        {error}
+                    </Text>
+
                     <Button
                         title='Login'
                         onPress={this._onSubmit}
+                        loading={loading}
                     />
                 </View>
             </View>
@@ -67,13 +79,15 @@ class SignIn extends PureComponent {
 
 const mapStateToProps = (state) => {
     return {
-
+        loading: Selectors.getAuthLoginAttempting(state),
+        error: Selectors.getAuthLoginError(state),
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        login: (email, password) =>
+            dispatch(Actions.authLoginAttempt(email, password)),
     };
 };
 
