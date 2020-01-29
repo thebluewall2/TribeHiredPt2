@@ -3,6 +3,7 @@ import Immutable from 'seamless-immutable';
 const INITIAL_STATE = Immutable({
     actions: {
         login: false,
+        signUp: false,
     },
     authToken: '',
     error: {
@@ -17,6 +18,7 @@ const loginAttempt = (state) => state.merge({
     },
     error: {
         login: '',
+        signUp: '',
     }
 });
 
@@ -39,10 +41,43 @@ const loginFailure = (state, action) => state.merge({
     }
 });
 
+const signUpAttempt = (state) => state.merge({
+    actions: {
+        ...state.actions,
+        signUp: true
+    },
+    error: {
+        ...state.error,
+        signUp: '',
+    }
+});
+
+const signUpSuccess = (state) => state.merge({
+    actions: {
+        ...state.actions,
+        signUp: false,
+    },
+});
+
+const signUpFailure = (state, action) => state.merge({
+    actions: {
+        ...state.actions,
+        signUp: false
+    },
+    error: {
+        ...state.error,
+        signUp: action.error
+    }
+});
+
 export default {
     INITIAL_STATE,
 
     loginAttempt,
     loginSuccess,
     loginFailure,
+
+    signUpAttempt,
+    signUpSuccess,
+    signUpFailure,
 };

@@ -22,8 +22,32 @@ const authLoginFailure = (error) => {
     };
 };
 
+const authSignUpAttempt = (user) => {
+    return {
+        type: Types.AUTH_SIGN_UP_ATTEMPT,
+        user,
+    };
+};
+
+const authSignUpSuccess = () => {
+    return {
+        type: Types.AUTH_SIGN_UP_SUCCESS,
+    };
+};
+
+const authSignUpFailure = (error) => {
+    return {
+        type: Types.AUTH_SIGN_UP_FAILURE,
+        error
+    };
+};
+
 export default {
     authLoginAttempt,
     authLoginSuccess,
     authLoginFailure,
+
+    authSignUpAttempt,
+    authSignUpSuccess,
+    authSignUpFailure,
 };
